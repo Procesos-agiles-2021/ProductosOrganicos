@@ -16,8 +16,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from .router import router
+from views import vercatalogo
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/',include(router.urls))
+    path('api/',include(router.urls)),
+    path('vercatalogo/',vercatalogo)
 ]
+
+# localhost:p/api/catalogo/5
+# GET, POST, PUT, DELETE
+# list , retrive es posible ya con la implementacion de rest_framewrok hacer todo el crud con el path ya creado
