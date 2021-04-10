@@ -16,8 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from .router import router
+from . import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/',include(router.urls))
+    path('', include(('mercadoOrganicosApp.urls', 'mercadoOrganicosApp'), namespace="mercadoOrganicosApp")),
+    path('api/',include(router.urls)),
 ]
