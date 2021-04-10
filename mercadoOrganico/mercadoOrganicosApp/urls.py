@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from .views import signin, signout, RegisterView, login_view, redirect_to_home
+from .viewsets import *
 from django.conf.urls import url
 
 urlpatterns = [
@@ -25,4 +26,5 @@ urlpatterns = [
     path('signout', signout, name='Sign Out'),
     path('login/', login_view, name='login'),
     path('register/', RegisterView.as_view(), name='auth_register'),
+    path('catalogo/', CatalogoViewset),
 ]

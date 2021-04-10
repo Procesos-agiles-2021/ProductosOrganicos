@@ -2,6 +2,7 @@ from rest_framework.serializers import Serializer, CharField, IntegerField, Mode
 from django.contrib.auth.models import User
 from rest_framework.validators import UniqueValidator
 from django.contrib.auth.password_validation import validate_password
+from .models import Catalogo
 
 
 class UserSerializer(Serializer):
@@ -46,3 +47,9 @@ class RegisterSerializer(ModelSerializer):
         user.save()
 
         return user
+
+      
+class CatalogoSerializer(ModelSerializer):
+    class Meta:
+        model = Catalogo
+        fields = '__all__'
