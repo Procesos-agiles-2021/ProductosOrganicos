@@ -34,7 +34,7 @@ def signout(request):
 
 @csrf_exempt
 def login_view(request):
-    return render(request, "mercadoOrganicosApp/login.html")
+    return render(request, "login.html")
 
 
 @csrf_exempt
