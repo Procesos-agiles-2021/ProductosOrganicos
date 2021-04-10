@@ -1,10 +1,21 @@
 from django.contrib import admin
 from django.contrib.auth.models import User
 from django.contrib.auth.admin import UserAdmin
-from .models import Catalogo
-
-admin.site.register(Catalogo)
-
+from .models import Catalogo, Producto, ItemCompra
 
 # Register your models here.
 
+
+@admin.register(Catalogo)
+class CatalogoAdmin(admin.ModelAdmin):
+    list_display = ('fecha_creacion', 'admin_creador')
+
+
+@admin.register(Producto)
+class ProductoAdmin(admin.ModelAdmin):
+    list_display = ('nombre', 'precio', 'itemId')
+
+
+@admin.register(ItemCompra)
+class ItemCompraAdmin(admin.ModelAdmin):
+    list_display = ('tipo', 'visibilidad', 'catalogo')
