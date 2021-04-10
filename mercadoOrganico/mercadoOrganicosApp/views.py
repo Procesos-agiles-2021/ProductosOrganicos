@@ -9,6 +9,7 @@ from rest_framework import status, generics, serializers
 from .logic import signin as do_signup, signout as do_signout
 from .serializers import UserSerializer, RegisterSerializer
 from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login, logout
 
 
 @api_view(["POST"])
