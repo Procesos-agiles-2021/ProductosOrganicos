@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'mercadoOrganicosApp'
+    'mercadoOrganicosApp',
+    'rest_framework'
 ]
 
 
@@ -78,9 +79,9 @@ WSGI_APPLICATION = 'mercadoOrganico.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'dbOrganicMarket',
-        'USER': 'postgres',
-        'PASSWORD': 'test',
+        'NAME': 'ProductosOrganicos',
+        'USER': 'jdruedaa',
+        'PASSWORD': 'Abc123#',
         'HOST': 'localhost',
         'PORT': '',
     }

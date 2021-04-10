@@ -1,7 +1,17 @@
 from rest_framework import serializers
+<<<<<<< HEAD
 from mercadoOrganicosApp.models import Producto
 
 
+=======
+from .models import *
+
+class carritoSerializer (serializers.ModelSerializer):
+    class Meta:
+        model = Carrito
+        fields= ('usuario_id','item_compras', 'precio_total')
+        
+>>>>>>> b9f4a318b4f2c08c5d659803cc2198ce28f12e08
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Producto

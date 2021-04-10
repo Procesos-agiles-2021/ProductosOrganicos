@@ -11,6 +11,11 @@ class CatalogoAdmin(admin.ModelAdmin):
     list_display = ('fecha_creacion', 'admin_creador')
 
 
+@admin.register(Producto)
+class ProductoAdmin(admin.ModelAdmin):
+    list_display = ('nombre', 'precio', 'itemId')
+
+
 @admin.register(ItemCompra)
 class ItemCompraAdmin(admin.ModelAdmin):
     list_display = ('tipo', 'visibilidad', 'catalogo')

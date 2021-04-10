@@ -1,6 +1,7 @@
 from django.shortcuts import render
 
 # Create your views here.
+<<<<<<< HEAD
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.renderers import JSONRenderer
@@ -53,3 +54,5 @@ def product_detail(request, pk):
             product_serializer.save()
             return JSONResponse(product_serializer.data)
         return JSONResponse(product_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+=======
+>>>>>>> b9f4a318b4f2c08c5d659803cc2198ce28f12e08
