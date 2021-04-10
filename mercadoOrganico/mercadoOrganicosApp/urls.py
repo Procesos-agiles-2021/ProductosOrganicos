@@ -1,6 +1,6 @@
-from .views import *
+from .viewsets import *
 from django.urls import path
 
 urlpatterns = [
-    # path('catalogo/', catalogo_list )
+    path('catalogo/', CatalogoViewset)
 ]
