@@ -1,14 +1,13 @@
 from django.shortcuts import render
 
 # Create your views here.
-<<<<<<< HEAD
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import JSONParser
 from rest_framework import status
-from mercadoOrganicosApp.models import Producto
-from mercadoOrganicosApp.serializers import ProductSerializer
+from .models import Producto
+from .serializers import ProductSerializer
 from django.contrib.auth import authenticate, login, logout
 from .forms import LoginForm, UserRegistrationForm, UserEditForm, ProfileEditForm
 
@@ -54,5 +53,3 @@ def product_detail(request, pk):
             product_serializer.save()
             return JSONResponse(product_serializer.data)
         return JSONResponse(product_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-=======
->>>>>>> b9f4a318b4f2c08c5d659803cc2198ce28f12e08
