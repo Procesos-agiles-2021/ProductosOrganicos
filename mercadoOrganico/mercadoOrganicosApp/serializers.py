@@ -1,10 +1,12 @@
 from rest_framework import serializers
 from .models import *
 
-class carritoSerializer (serializers.ModelSerializer):
+
+class CarritoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Carrito
-        fields= ('usuario_id','item_compras', 'precio_total')
+        fields = ('usuario_id', 'item_compras', 'precio_total')
+
 
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:

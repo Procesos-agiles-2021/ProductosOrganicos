@@ -3,13 +3,12 @@ from django.shortcuts import render
 # Create your views here.
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
+from rest_framework.response import Response
 from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import JSONParser
 from rest_framework import status
-from .models import Producto
-from .serializers import ProductSerializer
-from django.contrib.auth import authenticate, login, logout
-from .forms import LoginForm, UserRegistrationForm, UserEditForm, ProfileEditForm
+from .models import Producto, Carrito
+from .serializers import ProductSerializer, CarritoSerializer
 
 
 class JSONResponse(HttpResponse):
@@ -53,3 +52,21 @@ def product_detail(request, pk):
             product_serializer.save()
             return JSONResponse(product_serializer.data)
         return JSONResponse(product_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@csrf_exempt
+def carrito_list_update(request, userPk):
+    try:
+        carrito = Carrito.objects.filter(usuario_id=userPk)
+        if request.method == 'GET':
+            serializer = CarritoSerializer(carrito)
+            return Response(serializer.data)
+        elif request.method == "PUT":
+            serializer = CarritoSerializer(carrito, data=request.data)
+            if serializer.is_valid():
+                serializer.save
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            else:
+                return Response(status=status.HTTP_400_BAD_REQUEST)
+    except Carrito.DoesNotExist:
+        return Response(status=status.HTTP_400_BAD_REQUEST)

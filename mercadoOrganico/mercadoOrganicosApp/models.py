@@ -12,7 +12,7 @@ class Catalogo(models.Model):
 
 
 class ItemCompra(models.Model):
-    tipo = models.CharField(max_length=100)
+    imagenUrl = models.CharField(max_length=500)
     visibilidad = models.BooleanField()
     catalogo = models.ForeignKey(to=Catalogo, on_delete=models.DO_NOTHING)
 
@@ -51,7 +51,7 @@ class Carrito(models.Model):
     precio_total = models.DecimalField()
 
     class Meta:
-        verbose_name_plurar = "canastas"
+        verbose_name_plural = "carritos"
 
     def __str__(self):
         return self.precio_total
