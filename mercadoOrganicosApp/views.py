@@ -78,7 +78,7 @@ def catalogos_list_post(request):
 
 
 @api_view(["PUT", "DELETE"])
-def catalogos_update_delete(request, pk):
+def catalogos_update_delete(request, userPk, pk):
     try:
         catalogo = Catalogo.objects.get(pk=pk)
         if request.method == 'PUT':
