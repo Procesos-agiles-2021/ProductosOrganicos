@@ -12,7 +12,7 @@ class Catalogo(models.Model):
 
 
 class ItemCompra(models.Model):
-    tipo = models.CharField(max_length=100)
+    imagenUrl = models.CharField(max_length=500)
     visibilidad = models.BooleanField()
     catalogo = models.ForeignKey(to=Catalogo, on_delete=models.DO_NOTHING)
 
@@ -30,4 +30,17 @@ class Producto(models.Model):
 
     class Meta:
         verbose_name_plural = "Productos"
+
+
+class Carrito(models.Model):
+    usuario_id = models.OneToOneField(User, on_delete=models.CASCADE)
+    item_compras = models.ManyToManyField(ItemCompra)
+    precio_total = models.DecimalField()
+
+    class Meta:
+        verbose_name_plural = "carritos"
+
+    def __str__(self):
+        return self.precio_total
+
 

@@ -2,7 +2,7 @@ from rest_framework.serializers import Serializer, CharField, IntegerField, Mode
 from django.contrib.auth.models import User
 from rest_framework.validators import UniqueValidator
 from django.contrib.auth.password_validation import validate_password
-from .models import Catalogo
+from .models import *
 
 
 class UserSerializer(Serializer):
@@ -53,3 +53,9 @@ class CatalogoSerializer(ModelSerializer):
     class Meta:
         model = Catalogo
         fields = '__all__'
+
+
+class CarritoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Carrito
+        fields = ('usuario_id', 'item_compras', 'precio_total')

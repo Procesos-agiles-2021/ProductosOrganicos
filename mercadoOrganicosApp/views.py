@@ -7,8 +7,8 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status, generics, serializers
 from .logic import signin as do_signup, signout as do_signout
-from .serializers import UserSerializer, RegisterSerializer, CatalogoSerializer
-from .models import Catalogo
+from .serializers import *
+from .models import *
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 
@@ -91,4 +91,22 @@ def catalogos_update_delete(request, pk):
             catalogo.delete()
             return Response(status=status.HTTP_200_OK)
     except Catalogo.DoesNotExist:
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+@csrf_exempt
+def carrito_list_update(request, userPk):
+    try:
+        carrito = Carrito.objects.filter(usuario_id=userPk)
+        if request.method == 'GET':
+            serializer = CarritoSerializer(carrito)
+            return Response(serializer.data)
+        elif request.method == "PUT":
+            serializer = CarritoSerializer(carrito, data=request.data)
+            if serializer.is_valid():
+                serializer.save
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            else:
+                return Response(status=status.HTTP_400_BAD_REQUEST)
+    except Carrito.DoesNotExist:
         return Response(status=status.HTTP_400_BAD_REQUEST)
