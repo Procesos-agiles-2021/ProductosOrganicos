@@ -7,7 +7,8 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status, generics, serializers
 from .logic import signin as do_signup, signout as do_signout
-from .serializers import UserSerializer, RegisterSerializer
+from .serializers import UserSerializer, RegisterSerializer, CatalogoSerializer
+from .models import Catalogo
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 
@@ -59,3 +60,35 @@ class RegisterView(generics.CreateAPIView):
     queryset = User.objects.all()
     permission_classes = (AllowAny,)
     serializer_class = RegisterSerializer
+
+
+@api_view(["GET", "POST"])
+def catalogos_list_post(request):
+    if request.method == 'GET':
+        catalogos = Catalogo.objects.all()
+        serializer = CatalogoSerializer(catalogos, many=true)
+        return Response(serializer.data)
+    elif request.method == "POST":
+        serializer = CatalogoSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.error, status=status.HTTP_404_NOT_FOUND)
+
+
+@api_view(["PUT", "DELETE"])
+def catalogos_update_delete(request, pk):
+    try:
+        catalogo = Catalogo.objects.get(pk=pk)
+        if request.method == 'PUT':
+            serializer = CatalogoSerializer(catalogo, data=request.data)
+            if serializer.is_valid():
+                serializer.save
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            else:
+                return Response(status=status.HTTP_400_BAD_REQUEST)
+        elif request.method == 'DELETE':
+            catalogo.delete()
+            return Response(status=status.HTTP_200_OK)
+    except Catalogo.DoesNotExist:
+        return Response(status=status.HTTP_400_BAD_REQUEST)
