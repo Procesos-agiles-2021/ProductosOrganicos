@@ -66,9 +66,10 @@ class RegisterView(generics.CreateAPIView):
 def catalogos_list_post(request):
     if request.method == 'GET':
         catalogos = Catalogo.objects.all()
-        serializer = CatalogoSerializer(catalogos, many=true)
+        serializer = CatalogoSerializer(catalogos, many=True)
         return Response(serializer.data)
     elif request.method == "POST":
+        print(request.data)
         serializer = CatalogoSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save

@@ -48,14 +48,14 @@ class RegisterSerializer(ModelSerializer):
 
         return user
 
-      
+
 class CatalogoSerializer(ModelSerializer):
     class Meta:
         model = Catalogo
-        fields = '__all__'
+        fields = ('id', 'fecha_creacion', 'admin_creador')
 
 
-class CarritoSerializer(serializers.ModelSerializer):
+class CarritoSerializer(ModelSerializer):
     class Meta:
         model = Carrito
-        fields = ('usuario_id', 'item_compras', 'precio_total')
+        fields = ('id', 'usuario_id', 'item_compras', 'precio_total')
