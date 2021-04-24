@@ -66,12 +66,13 @@ class RegisterView(generics.CreateAPIView):
 def catalogos_list_post(request):
     if request.method == 'GET':
         catalogos = Catalogo.objects.all()
-        serializer = CatalogoSerializer(catalogos, many=true)
+        serializer = CatalogoSerializer(catalogos, many=True)
         return Response(serializer.data)
     elif request.method == "POST":
+        print(request.data)
         serializer = CatalogoSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save
+            serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.error, status=status.HTTP_404_NOT_FOUND)
 
@@ -83,7 +84,7 @@ def catalogos_update_delete(request, pk):
         if request.method == 'PUT':
             serializer = CatalogoSerializer(catalogo, data=request.data)
             if serializer.is_valid():
-                serializer.save
+                serializer.save()
                 return Response(serializer.data, status=status.HTTP_200_OK)
             else:
                 return Response(status=status.HTTP_400_BAD_REQUEST)
@@ -104,7 +105,7 @@ def carrito_list_update(request, userPk):
         elif request.method == "PUT":
             serializer = CarritoSerializer(carrito, data=request.data)
             if serializer.is_valid():
-                serializer.save
+                serializer.save()
                 return Response(serializer.data, status=status.HTTP_200_OK)
             else:
                 return Response(status=status.HTTP_400_BAD_REQUEST)

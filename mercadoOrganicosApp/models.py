@@ -35,7 +35,7 @@ class Producto(models.Model):
 class Carrito(models.Model):
     usuario_id = models.OneToOneField(User, on_delete=models.CASCADE)
     item_compras = models.ManyToManyField(ItemCompra)
-    precio_total = models.DecimalField()
+    precio_total = models.FloatField()
 
     class Meta:
         verbose_name_plural = "carritos"

@@ -18,4 +18,4 @@ class ProductoAdmin(admin.ModelAdmin):
 
 @admin.register(ItemCompra)
 class ItemCompraAdmin(admin.ModelAdmin):
-    list_display = ('tipo', 'visibilidad', 'catalogo')
+    list_display = ('imagenUrl', 'visibilidad', 'catalogo')
