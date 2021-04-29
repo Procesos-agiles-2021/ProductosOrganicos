@@ -114,7 +114,7 @@ def carrito_list_update(request, userPk):
 
 
 @api_view(["GET"])
-def producto_get(request, itemPk):
+def producto_get(request, catPk, itemPk):
     if request.method == 'GET':
         producto = Producto.objects.filter(itemId=itemPk)
         serializer = ProductoSerializer(producto)
