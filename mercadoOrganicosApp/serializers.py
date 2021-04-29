@@ -59,3 +59,9 @@ class CarritoSerializer(ModelSerializer):
     class Meta:
         model = Carrito
         fields = ('id', 'usuario_id', 'item_compras', 'precio_total')
+
+
+class ProductoSerializer(ModelSerializer):
+    class Meta:
+        model = Producto
+        fields = ('id', 'nombre', 'precio')

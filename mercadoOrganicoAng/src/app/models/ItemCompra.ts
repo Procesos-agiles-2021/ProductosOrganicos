@@ -1,6 +1,8 @@
+import { Producto } from './producto';
+
 export class ItemCompra {
    id: number;
    imagenUrl: string;
    visibilidad: boolean;
-   catalogo: number;
+   producto: Producto;
 }

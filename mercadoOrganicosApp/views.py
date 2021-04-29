@@ -95,7 +95,7 @@ def catalogos_update_delete(request, userPk, pk):
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
-@csrf_exempt
+@api_view(["GET", "PUT"])
 def carrito_list_update(request, userPk):
     try:
         carrito = Carrito.objects.filter(usuario_id=userPk)
@@ -111,3 +111,11 @@ def carrito_list_update(request, userPk):
                 return Response(status=status.HTTP_400_BAD_REQUEST)
     except Carrito.DoesNotExist:
         return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(["GET"])
+def producto_get(request, itemPk):
+    if request.method == 'GET':
+        producto = Producto.objects.filter(itemId=itemPk)
+        serializer = ProductoSerializer(producto)
+        return Response(serializer.data)
