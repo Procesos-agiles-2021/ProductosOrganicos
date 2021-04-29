@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Catalogo } from '../models/catalogo';
+import { Producto } from '../models/producto';
 import { ItemCompra } from '../models/itemcompra';
-import { DEPORTISTAS } from './mock-deportistas';
+//import { DEPORTISTAS } from './mock-deportistas';
 import { Observable, of } from 'rxjs';
 import { HttpClient } from  '@angular/common/http';
 
@@ -45,7 +46,7 @@ export class CatalogoService {
             itemCompra1.id = dataItem.id;
             itemCompra1.imagenUrl = dataItem.imagenUrl;
             itemCompra1.visibilidad = dataItem.visibilidad;
-            this.httpClient.get(`${this.API_URL}/catalogo/` + catalogo_id + '/itemproducto/' + itemCompra1.id)
+            this.httpClient.get<Producto>(`${this.API_URL}/catalogo/` + catalogo_id + '/itemproducto/' + itemCompra1.id)
             .subscribe(producto => itemCompra1.producto = producto);
             this.itemsCompra.push(itemCompra1)
         });

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Catalogo } from '../models/catalogo';
-import { ItemCompra } from '../models/itemcompra';
-import { CatalogoService } from '../services/catalogo.service';
+import { Catalogo } from '../../models/catalogo';
+import { ItemCompra } from '../../models/itemcompra';
+import { CatalogoService } from '../../services/catalogo.service';
 
 @Component({
   selector: 'app-catalogo',
@@ -16,16 +16,16 @@ export class CatalogoComponent implements OnInit {
 
   itemsCompra: ItemCompra[]
 
-  constructor(private catalogosService: CatalogosService) { }
+  constructor(private catalogosService: CatalogoService) { }
 
   ngOnInit(): void {
     this.getCatalogos();
-    this.getItemsCompra(defaultCatalogo.id);
+    this.getItemsCompra(this.defaultCatalogo.id);
   }
 
   getCatalogos(): void{
     this.catalogosService.getCatalogos().subscribe(catalogos => this.catalogos = catalogos);
-    this.defaultCatalogo = catalogos[0];
+    this.defaultCatalogo = this.catalogos[0];
   }
 
   getItemsCompra(catalogo_id: number): void{
