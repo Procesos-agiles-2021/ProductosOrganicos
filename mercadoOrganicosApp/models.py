@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.conf import settings
 
 
 # Create your models here.
@@ -34,7 +35,8 @@ class Producto(models.Model):
 
 class Carrito(models.Model):
     usuario_id = models.OneToOneField(User, on_delete=models.CASCADE)
-    item_compra = models.ManyToManyField(ItemCompra, through='Carrito_ItemCompra')
+    item_compra = models.ManyToManyField(
+        ItemCompra, through='Carrito_ItemCompra')
     precio_total = models.FloatField()
 
     class Meta:
@@ -51,3 +53,33 @@ class Carrito_ItemCompra(models.Model):
 
     class Meta:
         verbose_name_plural = "CarritoItemCompra"
+
+
+class Profile(models.Model):
+    user = models.OneToOneField(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    date_of_birth = models.DateField(blank=True, null=True)
+    is_client = models.BooleanField(default=False)
+    is_admin = models.BooleanField(default=False)
+    is_producer = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f'Profile for user {self.user.email}'
+
+
+class ClientProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    active = models.BooleanField(default=True)
+    name = models.CharField(max_length=64)
+
+
+class AdminProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    active = models.BooleanField(default=True)
+    name = models.CharField(max_length=64)
+
+
+class ProducerProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    active = models.BooleanField(default=True)
+    name = models.CharField(max_length=64)

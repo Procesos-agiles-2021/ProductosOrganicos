@@ -94,9 +94,9 @@ WSGI_APPLICATION = 'mercadoOrganico.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'ProductosOrganicos',
-        'USER': 'jdruedaa',
-        'PASSWORD': 'Abc123#',
+        'NAME': 'PrjPrcAglUniandes',
+        'USER': 'postgres',
+        'PASSWORD': 'test',
         'HOST': 'localhost',
         'PORT': '',
     }
@@ -141,7 +141,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-#location where django collect all static files
+# location where django collect all static files
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # location where you will store your static files

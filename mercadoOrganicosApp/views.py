@@ -7,8 +7,8 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status, generics, serializers
 from .logic import signin as do_signup, signout as do_signout
-from .serializers import *
-from .models import *
+from .serializers import UserSerializer, RegisterSerializer, CatalogoSerializer, CarritoSerializer, ProductoSerializer, RegisterClientSerializer
+from .models import Catalogo, ItemCompra, Producto, Carrito, Carrito_ItemCompra, Profile, ClientProfile
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 
@@ -119,3 +119,9 @@ def producto_get(request, catPk, itemPk):
         producto = Producto.objects.filter(itemId=itemPk)
         serializer = ProductoSerializer(producto)
         return Response(serializer.data)
+
+
+class RegisterClientView(generics.CreateAPIView):
+    queryset = User.objects.all()
+    permission_classes = (AllowAny,)
+    serializer_class = RegisterClientSerializer
