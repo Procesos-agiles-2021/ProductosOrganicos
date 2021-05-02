@@ -28,5 +28,6 @@ urlpatterns = [
     path('catalogo/', catalogos_list_post, name='catalogos_list_post'),
     #path('user/<int:userPk>/catalogo/', catalogos_list_post, name='Catalogos'),
     path('user/<int:userPk>/catalogo/<int:pk>', catalogos_update_delete, name='catalogos_update_delete'),
-    path('user/<int:userPk>/carrito', carrito_list_update, name='carrito_list_update')
+    path('user/<int:userPk>/carrito', carrito_list_create, name='carrito_list_create'),
+    #path('user/<int:userPk>/carrito/<int:pk>', carrito_list_update, name='carrito_list_update')
 ]
