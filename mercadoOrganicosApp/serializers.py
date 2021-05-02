@@ -128,4 +128,4 @@ class CarritoItemCompraSerializer(ModelSerializer):
 
     class Meta:
         model = Carrito_ItemCompra
-        fields = ('carrito', 'item_compra', 'cantidad')
+        fields = ('id', 'cantidad', 'carrito_id', 'item_compra_id')
