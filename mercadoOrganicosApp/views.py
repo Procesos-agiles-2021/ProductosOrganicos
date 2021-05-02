@@ -95,28 +95,9 @@ def catalogos_update_delete(request, userPk, pk):
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
-@api_view(["GET"])
-def carrito_list_post(request, userPk):
-    try:
-        carrito = Carrito.objects.filter(usuario_id=userPk)
-        if request.method == 'GET':
-            serializer = CarritoSerializer(carrito)
-            return Response(serializer.data)
-        elif request.method == "POST":
-            serializer = CarritoSerializer(carrito, data=request.data)
-            if serializer.is_valid():
-                serializer.save()
-                return Response(serializer.data, status=status.HTTP_200_OK)
-            else:
-                return Response(status=status.HTTP_400_BAD_REQUEST)
-    except Carrito.DoesNotExist:
-        return Response(status=status.HTTP_400_BAD_REQUEST)
-
-
 @api_view(["POST"])
 def carrito_list_create(request, userPk):
     try:
-        print('ingreso')
         carrito = Carrito.objects.filter(usuario_id=userPk)
         if request.method == 'POST':
             serializer = CarritoCreateSerializer(data=request.data)
