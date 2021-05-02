@@ -55,31 +55,11 @@ class Carrito_ItemCompra(models.Model):
         verbose_name_plural = "CarritoItemCompra"
 
 
-class Profile(models.Model):
+class ClientProfile(models.Model):
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    date_of_birth = models.DateField(blank=True, null=True)
-    is_client = models.BooleanField(default=False)
-    is_admin = models.BooleanField(default=False)
-    is_producer = models.BooleanField(default=False)
+    active = models.BooleanField(default=True)
+    name = models.CharField(max_length=64)
 
     def __str__(self):
-        return f'Profile for user {self.user.email}'
-
-
-class ClientProfile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    active = models.BooleanField(default=True)
-    name = models.CharField(max_length=64)
-
-
-class AdminProfile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    active = models.BooleanField(default=True)
-    name = models.CharField(max_length=64)
-
-
-class ProducerProfile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    active = models.BooleanField(default=True)
-    name = models.CharField(max_length=64)
+        return f'Profile for user {self.name}'

@@ -8,7 +8,7 @@ from rest_framework.response import Response
 from rest_framework import status, generics, serializers
 from .logic import signin as do_signup, signout as do_signout
 from .serializers import UserSerializer, RegisterSerializer, CatalogoSerializer, CarritoSerializer, ProductoSerializer, RegisterClientSerializer
-from .models import Catalogo, ItemCompra, Producto, Carrito, Carrito_ItemCompra, Profile, ClientProfile
+from .models import Catalogo, ItemCompra, Producto, Carrito, Carrito_ItemCompra, ClientProfile
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 
