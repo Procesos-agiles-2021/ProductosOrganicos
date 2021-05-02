@@ -123,3 +123,9 @@ class RegisterClientSerializer(ModelSerializer):
         user.save()
 
         return user
+
+class CarritoItemCompraSerializer(ModelSerializer):
+
+    class Meta:
+        model = Carrito_ItemCompra
+        fields = ('carrito', 'item_compra', 'cantidad')

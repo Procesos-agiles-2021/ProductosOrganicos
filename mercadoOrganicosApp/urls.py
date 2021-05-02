@@ -26,6 +26,7 @@ urlpatterns = [
     path('login/', login_view, name='login'),
     path('register/', RegisterView.as_view(), name='auth_register'),
     path('catalogo/', catalogos_list_post, name='catalogos_list_post'),
+    path('carritoCompra/', carrito_item_compra, name='carrito_item_compra'),
     path('catalogo/<int:catPk>/itemproducto/<int:itemPk>',
          producto_get, name='producto_get_by_itemId'),
     #path('user/<int:userPk>/catalogo/', catalogos_list_post, name='Catalogos'),

@@ -125,3 +125,17 @@ class RegisterClientView(generics.CreateAPIView):
     queryset = User.objects.all()
     permission_classes = (AllowAny,)
     serializer_class = RegisterClientSerializer
+
+@api_view(["GET", "POST"])
+def carrito_item_compra(request):
+    if request.method == 'GET':
+        carritoItemCompra = Carrito_ItemCompra.objects.all()
+        serializer = CarritoItemCompraSerializer(carritoItemCompra)
+        return Response(serializer.data)
+    elif request.method == "POST":
+        print(request.data)
+        serializer = CarritoItemCompraSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.error, status=status.HTTP_404_NOT_FOUND)
