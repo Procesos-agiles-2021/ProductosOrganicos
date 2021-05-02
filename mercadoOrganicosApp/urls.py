@@ -31,6 +31,6 @@ urlpatterns = [
     #path('user/<int:userPk>/catalogo/', catalogos_list_post, name='Catalogos'),
     path('user/<int:userPk>/catalogo/<int:pk>',
          catalogos_update_delete, name='catalogos_update_delete'),
-    path('registerClient/', RegisterClientView.as_view(), name='client_register')
+    path('registerClient/', RegisterClientView.as_view(), name='client_register'),
     path('user/<int:userPk>/carrito', carrito_list_create, name='carrito_list_create'),
 ]
