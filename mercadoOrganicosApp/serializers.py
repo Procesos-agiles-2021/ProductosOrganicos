@@ -1,3 +1,4 @@
+from rest_framework import serializers
 from rest_framework.serializers import Serializer, CharField, IntegerField, ModelSerializer, EmailField, ValidationError, BooleanField
 from django.contrib.auth.models import User
 from rest_framework.validators import UniqueValidator
@@ -64,7 +65,49 @@ class CatalogoSerializer(ModelSerializer):
 class CarritoSerializer(ModelSerializer):
     class Meta:
         model = Carrito
-        fields = ('id', 'usuario_id', 'item_compras', 'precio_total')
+        fields = ('id', 'usuario_id', 'item_compras')
+
+
+class ItemCompraSerializer(ModelSerializer):
+    class Meta:
+        model = ItemCompra
+        fields = ('id', 'imagenUrl', 'visibilidad', 'catalogo')
+
+
+class CarritoItemCompraCantidadSerializer(ModelSerializer):
+    itemCompra = ItemCompraSerializer(read_only=True)
+    itemCompra_id = serializers.PrimaryKeyRelatedField(
+        write_only=True, source='itemCompra', queryset=ItemCompra.objects.all())
+
+    class Meta:
+        model = ItemCompraCarrito
+        fields = ('itemCompra', 'itemCompra_id', 'cantidad')
+
+
+class ItemCompraCarritoSerializer(ModelSerializer):
+    class Meta:
+        model = ItemCompraCarrito
+        fields = ('itemCompra_id', 'cantidad')
+
+
+class CarritoCreateSerializer(ModelSerializer):
+    item_compras = CarritoItemCompraCantidadSerializer(many=True)
+
+    class Meta:
+        model = Carrito
+        fields = ('id', 'usuario_id', 'item_compras')
+
+    def create(self, validated_data):
+        item_compras_data = validated_data.pop('item_compras')
+        print(item_compras_data)
+        carrito = Carrito.objects.create(**validated_data)
+        for item_data in item_compras_data:
+            print(item_data)
+            ItemCompraCarrito.objects.create(
+                carrito=carrito,
+                item_compra=item_data.get('itemCompra'),
+                cantidad=item_data.get('cantidad'))
+        return carrito
 
 
 class ProductoSerializer(ModelSerializer):
@@ -123,9 +166,3 @@ class RegisterClientSerializer(ModelSerializer):
         user.save()
 
         return user
-
-class CarritoItemCompraSerializer(ModelSerializer):
-
-    class Meta:
-        model = Carrito_ItemCompra
-        fields = ('id', 'cantidad', 'carrito_id', 'item_compra_id')

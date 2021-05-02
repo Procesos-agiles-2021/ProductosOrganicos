@@ -7,8 +7,8 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status, generics, serializers
 from .logic import signin as do_signup, signout as do_signout
-from .serializers import UserSerializer, RegisterSerializer, CatalogoSerializer, CarritoSerializer, ProductoSerializer, RegisterClientSerializer
-from .models import Catalogo, ItemCompra, Producto, Carrito, Carrito_ItemCompra, ClientProfile
+from .serializers import *
+from .models import *
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 
@@ -95,15 +95,12 @@ def catalogos_update_delete(request, userPk, pk):
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
-@api_view(["GET", "PUT"])
-def carrito_list_update(request, userPk):
+@api_view(["POST"])
+def carrito_list_create(request, userPk):
     try:
         carrito = Carrito.objects.filter(usuario_id=userPk)
-        if request.method == 'GET':
-            serializer = CarritoSerializer(carrito)
-            return Response(serializer.data)
-        elif request.method == "PUT":
-            serializer = CarritoSerializer(carrito, data=request.data)
+        if request.method == 'POST':
+            serializer = CarritoCreateSerializer(data=request.data)
             if serializer.is_valid():
                 serializer.save()
                 return Response(serializer.data, status=status.HTTP_200_OK)
@@ -125,17 +122,3 @@ class RegisterClientView(generics.CreateAPIView):
     queryset = User.objects.all()
     permission_classes = (AllowAny,)
     serializer_class = RegisterClientSerializer
-
-@api_view(["GET", "POST"])
-def carrito_item_compra(request):
-    if request.method == 'GET':
-        carritoItemCompra = Carrito_ItemCompra.objects.all()
-        serializer = CarritoItemCompraSerializer(carritoItemCompra)
-        return Response(serializer.data)
-    elif request.method == "POST":
-        print(request.data)
-        serializer = CarritoItemCompraSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.error, status=status.HTTP_404_NOT_FOUND)
