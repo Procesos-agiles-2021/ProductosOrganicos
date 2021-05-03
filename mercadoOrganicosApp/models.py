@@ -41,7 +41,7 @@ class Carrito(models.Model):
 class ItemCompraCarrito(models.Model):
     carrito = models.ForeignKey(Carrito, on_delete=models.PROTECT)
     item_compra = models.ForeignKey(ItemCompra, on_delete=models.PROTECT)
-    cantidad = models.IntegerField(default=1)
+    cantidad = models.IntegerField()
 
     class Meta:
         verbose_name_plural = "ItemsCompraCarrito"

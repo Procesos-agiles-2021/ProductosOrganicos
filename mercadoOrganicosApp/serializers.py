@@ -74,40 +74,22 @@ class ItemCompraSerializer(ModelSerializer):
         fields = ('id', 'imagenUrl', 'visibilidad', 'catalogo')
 
 
-class CarritoItemCompraCantidadSerializer(ModelSerializer):
-    itemCompra = ItemCompraSerializer(read_only=True)
-    itemCompra_id = serializers.PrimaryKeyRelatedField(
-        write_only=True, source='itemCompra', queryset=ItemCompra.objects.all())
-
-    class Meta:
-        model = ItemCompraCarrito
-        fields = ('itemCompra', 'itemCompra_id', 'cantidad')
-
-
 class ItemCompraCarritoSerializer(ModelSerializer):
     class Meta:
         model = ItemCompraCarrito
-        fields = ('itemCompra_id', 'cantidad')
+        fields = ('item_compra_id', 'cantidad')
 
 
-class CarritoCreateSerializer(ModelSerializer):
-    item_compras = CarritoItemCompraCantidadSerializer(many=True)
+class CarritoDisplaySerializer(serializers.ModelSerializer):
+    item_compras = serializers.SerializerMethodField()
 
     class Meta:
         model = Carrito
         fields = ('id', 'usuario_id', 'item_compras')
 
-    def create(self, validated_data):
-        item_compras_data = validated_data.pop('item_compras')
-        print(item_compras_data)
-        carrito = Carrito.objects.create(**validated_data)
-        for item_data in item_compras_data:
-            print(item_data)
-            ItemCompraCarrito.objects.create(
-                carrito=carrito,
-                item_compra=item_data.get('itemCompra'),
-                cantidad=item_data.get('cantidad'))
-        return carrito
+    def get_item_compras(self, carrito_instance):
+        query_datas = ItemCompraCarrito.objects.filter(carrito=carrito_instance)
+        return [ItemCompraCarritoSerializer(itemCompra).data for itemCompra in query_datas]
 
 
 class ProductoSerializer(ModelSerializer):
