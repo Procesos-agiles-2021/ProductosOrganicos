@@ -156,6 +156,8 @@ django_heroku.settings(locals())
 
 TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+
 
 NOSE_ARGS = [
     '--with-coverage',

@@ -119,3 +119,9 @@ def producto_get(request, catPk, itemPk):
         producto = Producto.objects.filter(itemId=itemPk)
         serializer = ProductoSerializer(producto)
         return Response(serializer.data)
+
+
+class RegisterClientView(generics.CreateAPIView):
+    queryset = User.objects.all()
+    permission_classes = (AllowAny,)
+    serializer_class = RegisterClientSerializer
