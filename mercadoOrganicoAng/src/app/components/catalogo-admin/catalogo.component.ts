@@ -8,7 +8,7 @@ import { CatalogoService } from '../../services/catalogo.service';
   templateUrl: './catalogo.component.html',
   styleUrls: ['./catalogo.component.scss']
 })
-export class CatalogoComponent implements OnInit {
+export class CatalogoAdminComponent implements OnInit {
 
   catalogos: Catalogo[]
 
@@ -25,13 +25,23 @@ export class CatalogoComponent implements OnInit {
 
   getCatalogos(): void{
     this.catalogosService.getCatalogos().subscribe(catalogos => this.catalogos = catalogos);
+    console.log("texto", this.catalogos.findIndex(0));
     if(this.catalogos)
     {
-      this.defaultCatalogo = this.catalogos[0];
+      this.defaultCatalogo = this.catalogos.findIndex(0);
+      console.log("facil", this.defaultCatalogo);
     }
   }
 
   getItemsCompra(catalogo_id: number): void{
     this.catalogosService.getItemsCompra(catalogo_id).subscribe(itemsCompra => this.itemsCompra = itemsCompra);
+  }
+
+  updatePrice(product_id: number, precio:number): void{
+    this.catalogosService.updatePrice(product_id, precio);
+  }
+
+  remove(itemCompra_id: number): void{
+    this.catalogosService.remove(itemCompra_id);
   }
 }

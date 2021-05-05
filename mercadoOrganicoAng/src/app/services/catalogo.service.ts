@@ -15,7 +15,8 @@ export class CatalogoService {
   constructor(private  httpClient:  HttpClient
     ) { }
 
-  API_URL  =  'https://mercado-organico.herokuapp.com/';
+  //API_URL  =  'https://mercado-organico.herokuapp.com';
+  API_URL  =  'http://localhost:8000';
   private catalogos: Array<Catalogo>;
 
   private itemsCompra: Array<ItemCompra>;
@@ -54,4 +55,7 @@ export class CatalogoService {
     return of(this.itemsCompra);
     }
 
+  //updatePrice(product_id: number, price:number){
+  //  this.httpClient.post(`${this.API_URL}/catalogo/` + catalogo_id + '/items')
+  //  }
 }

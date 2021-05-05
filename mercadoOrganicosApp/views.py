@@ -119,3 +119,11 @@ def producto_get(request, catPk, itemPk):
         producto = Producto.objects.filter(itemId=itemPk)
         serializer = ProductoSerializer(producto)
         return Response(serializer.data)
+
+
+@api_view(["GET"])
+def items_get(request, catPk):
+    if request.method == 'GET':
+        item = ItemCompra.objects.filter(catalogo=catPk)
+        serializer = ItemCompraSerializer(item)
+        return Response(serializer.data)
