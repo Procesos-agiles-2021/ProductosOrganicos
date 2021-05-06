@@ -7,8 +7,8 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status, generics, serializers
 from .logic import signin as do_signup, signout as do_signout
-from .serializers import UserSerializer, RegisterSerializer, CatalogoSerializer, CarritoSerializer, ProductoSerializer, RegisterClientSerializer
-from .models import Catalogo, ItemCompra, Producto, Carrito, Carrito_ItemCompra, ClientProfile
+from .serializers import *
+from .models import *
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 
@@ -95,18 +95,69 @@ def catalogos_update_delete(request, userPk, pk):
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
-@api_view(["GET", "PUT"])
-def carrito_list_update(request, userPk):
+@api_view(["GET", "POST"])
+def carrito_list_create(request, userPk):
     try:
-        carrito = Carrito.objects.filter(usuario_id=userPk)
         if request.method == 'GET':
-            serializer = CarritoSerializer(carrito)
+            carrito = Carrito.objects.filter(usuario_id=userPk)
+            serializer = CarritoSerializer(carrito, many=True)
             return Response(serializer.data)
-        elif request.method == "PUT":
-            serializer = CarritoSerializer(carrito, data=request.data)
+        elif request.method == 'POST':
+            serializer = CarritoSerializer(data=request.data)
             if serializer.is_valid():
                 serializer.save()
                 return Response(serializer.data, status=status.HTTP_200_OK)
+            else:
+                return Response(status=status.HTTP_400_BAD_REQUEST)
+    except Carrito.DoesNotExist:
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(["GET", "POST", "PUT"])
+def itemcarrito_list_create(request, userPk):
+    try:
+        if request.method == 'GET':
+            carrito = Carrito.objects.filter(usuario_id=userPk)
+            serializer = CarritoDisplaySerializer(carrito, many=True)
+            return Response(serializer.data)
+        elif request.method == 'POST':
+            carrito = Carrito.objects.filter(usuario_id=userPk).first()
+            itemCompra_id = request.data['item_compras'][0]['itemCompra_id']
+            itemCompra = ItemCompra.objects.filter(id=itemCompra_id).first()
+            cantidad = request.data['item_compras'][0]['cantidad']
+            itemCompraCarrito = ItemCompraCarrito.objects.filter(item_compra=itemCompra, carrito=carrito)
+
+            if not itemCompraCarrito.exists():
+                itemCompraNuevo = ItemCompraCarrito(carrito=carrito, item_compra=itemCompra, cantidad=cantidad)
+                itemCompraNuevo.save()
+                return Response(status=status.HTTP_200_OK)
+            else:
+                return Response(status=status.HTTP_400_BAD_REQUEST)
+    except Carrito.DoesNotExist:
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(["PUT", "DELETE"])
+def itemcarrito_update_delete(request, userPk, itemPk):
+    try:
+        if request.method == 'DELETE':
+            carrito = Carrito.objects.filter(usuario_id=userPk).first()
+            itemCompra = ItemCompra.objects.filter(id=itemPk).first()
+            itemCompraCarrito = ItemCompraCarrito.objects.filter(item_compra=itemCompra, carrito=carrito)
+
+            if itemCompraCarrito.exists():
+                itemCompraCarrito.delete()
+                return Response(status=status.HTTP_200_OK)
+            else:
+                return Response(status=status.HTTP_400_BAD_REQUEST)
+        elif  request.method == 'PUT':
+            carrito = Carrito.objects.filter(usuario_id=userPk).first()
+            itemCompra = ItemCompra.objects.filter(id=itemPk).first()
+            itemCompraCarrito = ItemCompraCarrito.objects.filter(item_compra=itemCompra, carrito=carrito)
+
+            if itemCompraCarrito.exists():
+                itemCompraCarrito.update(cantidad=request.data['cantidad'])
+                return Response(status=status.HTTP_200_OK)
             else:
                 return Response(status=status.HTTP_400_BAD_REQUEST)
     except Carrito.DoesNotExist:
@@ -125,17 +176,3 @@ class RegisterClientView(generics.CreateAPIView):
     queryset = User.objects.all()
     permission_classes = (AllowAny,)
     serializer_class = RegisterClientSerializer
-
-@api_view(["GET", "POST"])
-def carrito_item_compra(request):
-    if request.method == 'GET':
-        carritoItemCompra = Carrito_ItemCompra.objects.all()
-        serializer = CarritoItemCompraSerializer(carritoItemCompra)
-        return Response(serializer.data)
-    elif request.method == "POST":
-        print(request.data)
-        serializer = CarritoItemCompraSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.error, status=status.HTTP_404_NOT_FOUND)

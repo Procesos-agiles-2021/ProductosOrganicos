@@ -1,3 +1,4 @@
+from rest_framework import serializers
 from rest_framework.serializers import Serializer, CharField, IntegerField, ModelSerializer, EmailField, ValidationError, BooleanField
 from django.contrib.auth.models import User
 from rest_framework.validators import UniqueValidator
@@ -64,7 +65,31 @@ class CatalogoSerializer(ModelSerializer):
 class CarritoSerializer(ModelSerializer):
     class Meta:
         model = Carrito
-        fields = ('id', 'usuario_id', 'item_compras', 'precio_total')
+        fields = ('id', 'usuario_id', 'item_compras')
+
+
+class ItemCompraSerializer(ModelSerializer):
+    class Meta:
+        model = ItemCompra
+        fields = ('id', 'imagenUrl', 'visibilidad', 'catalogo')
+
+
+class ItemCompraCarritoSerializer(ModelSerializer):
+    class Meta:
+        model = ItemCompraCarrito
+        fields = ('item_compra_id', 'cantidad')
+
+
+class CarritoDisplaySerializer(serializers.ModelSerializer):
+    item_compras = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Carrito
+        fields = ('id', 'usuario_id', 'item_compras')
+
+    def get_item_compras(self, carrito_instance):
+        query_datas = ItemCompraCarrito.objects.filter(carrito=carrito_instance)
+        return [ItemCompraCarritoSerializer(itemCompra).data for itemCompra in query_datas]
 
 
 class ProductoSerializer(ModelSerializer):
@@ -123,9 +148,3 @@ class RegisterClientSerializer(ModelSerializer):
         user.save()
 
         return user
-
-class CarritoItemCompraSerializer(ModelSerializer):
-
-    class Meta:
-        model = Carrito_ItemCompra
-        fields = ('id', 'cantidad', 'carrito_id', 'item_compra_id')
