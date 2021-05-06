@@ -95,9 +95,9 @@ WSGI_APPLICATION = 'mercadoOrganico.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'unitTestUniandes',
+        'NAME': 'unitTest4Uniandes',
         'USER': 'postgres',
-        'PASSWORD': 'test',
+        'PASSWORD': 'test1',
         'HOST': 'localhost',
         'PORT': '',
     }
@@ -157,11 +157,3 @@ django_heroku.settings(locals())
 TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
-
-
-NOSE_ARGS = [
-    '--with-coverage',
-    '--cover-erase',
-    '--cover-inclusive',
-    '--cover-package=register'
-]

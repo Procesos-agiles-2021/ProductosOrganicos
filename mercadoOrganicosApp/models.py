@@ -53,13 +53,3 @@ class Carrito_ItemCompra(models.Model):
 
     class Meta:
         verbose_name_plural = "CarritoItemCompra"
-
-
-class ClientProfile(models.Model):
-    user = models.OneToOneField(
-        settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    active = models.BooleanField(default=True)
-    name = models.CharField(max_length=64)
-
-    def __str__(self):
-        return f'Profile for user {self.name}'
