@@ -117,7 +117,7 @@ def carrito_list_update(request, userPk):
 def producto_get(request, catPk, itemPk):
     if request.method == 'GET':
         producto = Producto.objects.filter(itemId=itemPk)
-        serializer = ProductoSerializer(producto)
+        serializer = ProductoSerializer(producto, many=True)
         return Response(serializer.data)
 
 
@@ -125,5 +125,5 @@ def producto_get(request, catPk, itemPk):
 def items_get(request, catPk):
     if request.method == 'GET':
         item = ItemCompra.objects.filter(catalogo=catPk)
-        serializer = ItemCompraSerializer(item)
+        serializer = ItemCompraSerializer(item, many=True)
         return Response(serializer.data)
