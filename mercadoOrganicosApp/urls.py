@@ -29,6 +29,10 @@ urlpatterns = [
     path('catalogo/<int:catPk>/itemproducto/<int:itemPk>', producto_get, name='producto_get_by_itemId'),
     path('catalogo/<int:catPk>/items', items_get, name='items_get_by_catalogoId'),
     #path('user/<int:userPk>/catalogo/', catalogos_list_post, name='Catalogos'),
-    path('user/<int:userPk>/catalogo/<int:pk>', catalogos_update_delete, name='catalogos_update_delete'),
-    path('user/<int:userPk>/carrito', carrito_list_update, name='carrito_list_update')
+    path('user/<int:userPk>/catalogo/<int:pk>',
+         catalogos_update_delete, name='catalogos_update_delete'),
+    path('registerClient/', RegisterClientView.as_view(), name='client_register'),
+    path('carrito/<int:userPk>', carrito_list_create, name='carrito_list_create'),
+    path('itemcarrito/<int:userPk>', itemcarrito_list_create, name='itemcarrito_list_create'),
+    path('itemcarrito/<int:userPk>/itemcompra/<int:itemPk>', itemcarrito_update_delete, name='itemcarrito_update_delete'),
 ]

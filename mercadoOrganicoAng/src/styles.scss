@@ -1,1 +1,44 @@
-/* You can add global styles to this file, and also import other style files */
+$font-family-sans-serif: Gotham Book,
+-apple-system,
+BlinkMacSystemFont,
+"Segoe UI",
+Roboto,
+"Helvetica Neue",
+Arial,
+sans-serif,
+"Apple Color Emoji",
+"Segoe UI Emoji",
+"Segoe UI Symbol",
+"Noto Color Emoji";
+$font-size-base: 0.9rem;
+@import '~node_modules/bootstrap/scss/bootstrap';
+.main-container {
+    margin-top: 20px;
+}
+
+#mainnav {
+    .navbar-brand {
+        margin-right: 3rem;
+    }
+    .nav-item {
+        margin: 0rem 2rem;
+        &.active {
+            border-bottom: 4px solid $primary;
+            margin-bottom: -4px;
+        }
+    }
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #333;
+    color: white;
+    min-height: 74px;
+    code {
+        color: white !important;
+        font-size: 1rem;
+    }
+}
