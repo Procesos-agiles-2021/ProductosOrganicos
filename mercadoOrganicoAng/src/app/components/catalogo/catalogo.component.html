@@ -1,11 +1,15 @@
 <h2>Catalogo</h2>
 <ul class = "itemcompra">
   <li *ngFor="let itemcompra of itemsCompra">
-    <div class="card"> <! -- routerLink = "/catalogo/productos/{{itemcompra.producto.id}}"> -->
-      <img src="{{itemcompra.imagenUrl}}" alt="Imagen no disponible" style="width:100%">
-      <div class="container">
-        <h4><b>{{itemcompra.producto.nombre}}</b></h4>
-        <p>{{itemcompra.producto.precio}}</p>
+    <div *ngIf="itemcompra.visibilidad==true">
+      <div class="card"> <! -- routerLink = "/catalogo/productos/{{itemcompra.producto.id}}">
+        <img src="{{itemcompra.imagenUrl}}" alt="Imagen no disponible" style="width:100%">
+        <div class="container">
+          <div *ngIf="itemcompra.producto">
+            <h4><b>{{itemcompra.producto.nombre}}</b></h4>
+            <p>{{itemcompra.producto.precio}}</p>
+          </div>
+        </div>
       </div>
     </div>
   </li>

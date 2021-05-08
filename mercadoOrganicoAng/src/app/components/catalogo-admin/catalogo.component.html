@@ -1,0 +1,18 @@
+<h2>Catalogo</h2>
+<ul class = "itemcompra">
+  <li *ngFor="let itemcompra of itemsCompra">
+    <div *ngIf="itemcompra.visibilidad==True">
+      <div class="card"> <! -- routerLink = "/catalogo/productos/{{itemcompra.producto.id}}"> -->
+        <img src="{{itemcompra.imagenUrl}}" alt="Imagen no disponible" style="width:100%">
+        <div class="container">
+          <h4><b>{{itemcompra.producto.nombre}}</b></h4><br>
+          <p>{{itemcompra.producto.precio}}</p>
+          <label>Nuevo precio:</label>
+          <input type="number" #nprice>
+          <button (click)="updatePrice({{itemCompra.producto.id}}, nprice.value)">Actualizar precio</button>
+          <button (click)="remove({{itemCompra.id}})">Quitar del catálogo</button>
+        </div>
+      </div>
+    </div>
+  </li>
+</ul>
